@@ -12,7 +12,7 @@ class ExeclTest {
     @Test
     void readExecl() {
         String filePath = "F:\\OneDrive\\@恒生电子工作资料\\补丁做包小插件第一版\\modifyProgramMaxVer1023481071.xlsx";
-        List<CsvRow> csvRowList = Execl.readExecl(filePath);
-        csvRowList.stream().forEach(System.out::println);
+        List<List<Object>> lists = Execl.readExecl(filePath);
+        lists.stream().forEach(System.out::println);
     }
 }
