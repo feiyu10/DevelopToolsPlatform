@@ -19,11 +19,14 @@ public class BookkeepingAndSettlement {
                 Map<String,Map<String,Float>> liquidationData = new HashMap<>();
                 String delimiter = "    ";
 
+                System.out.println("============================所有记录 start");
                 bookKeepJos.stream().forEach(bookKeepJo -> {
                         String[] participantArr = bookKeepJo.getParticipant().split("");
 
                         String payer = bookKeepJo.getPayer();
                         Float averageCost = bookKeepJo.getCost() / participantArr.length;
+
+
                         System.out.println(payer + delimiter
                                 + bookKeepJo.getRemark() + delimiter
                                 + "参与人:" + bookKeepJo.getParticipant() + delimiter
@@ -49,14 +52,15 @@ public class BookkeepingAndSettlement {
                                 liquidationData.put(payer,floatMap);
                         }
                 });
+                System.out.println("============================所有记录 end");
 
-                System.out.println("============================所有记录start");
+                System.out.println("============================所有应收款项 start");
                 liquidationData.forEach((s, stringFloatMap) -> {
                         stringFloatMap.forEach((s1, aFloat) -> {
                                 System.out.println(s + "收" + s1 + delimiter + aFloat);
                         });
                 });
-                System.out.println("============================所有记录end");
+                System.out.println("============================所有应收款项 end");
 
                 HashMap<String, Float> liquidation = new HashMap<>();
 
