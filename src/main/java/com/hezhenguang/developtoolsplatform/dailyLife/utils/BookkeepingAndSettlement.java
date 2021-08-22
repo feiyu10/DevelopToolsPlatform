@@ -29,6 +29,7 @@ public class BookkeepingAndSettlement {
 
                         System.out.println(payer + delimiter
                                 + bookKeepJo.getRemark() + delimiter
+                                + "支出费用:" + bookKeepJo.getCost() + delimiter
                                 + "参与人:" + bookKeepJo.getParticipant() + delimiter
                                 + "平均每人:" + averageCost);
 
