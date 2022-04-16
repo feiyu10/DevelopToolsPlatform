@@ -4,6 +4,8 @@ import com.hezhenguang.developtoolsplatform.dailyLife.pojo.BookKeepJo;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +18,7 @@ public class BookkeepingAndSettlement {
 
         public static void Settlement(List<BookKeepJo> bookKeepJos){
 
-                Map<String,Map<String,Float>> liquidationData = new HashMap<>();
+                Map<String,Map<String,Double>> liquidationData = new HashMap<>();
                 String delimiter = "    ";
 
                 System.out.println("============================所有记录 start");
@@ -24,7 +26,7 @@ public class BookkeepingAndSettlement {
                         String[] participantArr = bookKeepJo.getParticipant().split("");
 
                         String payer = bookKeepJo.getPayer();
-                        Float averageCost = bookKeepJo.getCost() / participantArr.length;
+                        Double averageCost = bookKeepJo.getCost() / participantArr.length;
 
 
                         System.out.println(payer + delimiter
@@ -38,15 +40,15 @@ public class BookkeepingAndSettlement {
                                 if (StringUtils.equals(payer,participantArr[i])) continue;
 
                                 String consumerName = participantArr[i];
-                                Map<String, Float> floatMap = liquidationData.get(payer);
-                                Float oldNumericalValue = Float.valueOf(0);
+                                Map<String, Double> floatMap = liquidationData.get(payer);
+                                Double oldNumericalValue = Double.valueOf(0);
                                 if (MapUtils.isNotEmpty(floatMap)){
-                                        oldNumericalValue = floatMap.get(consumerName) == null ? Float.valueOf(0) : floatMap.get(consumerName);
+                                        oldNumericalValue = floatMap.get(consumerName) == null ? Double.valueOf(0) : floatMap.get(consumerName);
                                 }else {
-                                        floatMap = new HashMap<String, Float>();
+                                        floatMap = new HashMap<String, Double>();
                                 }
 
-                                Float newNumericalValue = oldNumericalValue + averageCost;
+                                Double newNumericalValue = oldNumericalValue + averageCost;
 
                                 floatMap.put(consumerName,newNumericalValue);
 
@@ -63,18 +65,18 @@ public class BookkeepingAndSettlement {
                 });
                 System.out.println("============================所有应收款项 end");
 
-                HashMap<String, Float> liquidation = new HashMap<>();
+                HashMap<String, Double> liquidation = new HashMap<>();
 
-                for (Map.Entry<String,Map<String,Float>> item :liquidationData.entrySet()) {
+                for (Map.Entry<String,Map<String,Double>> item :liquidationData.entrySet()) {
                         String payer = item.getKey();
-                        Map<String, Float> floatMap = item.getValue();
-                        for (Map.Entry<String,Float> consumer : floatMap.entrySet()) {
+                        Map<String, Double> floatMap = item.getValue();
+                        for (Map.Entry<String,Double> consumer : floatMap.entrySet()) {
                                 String consumerName = consumer.getKey();
-                                Float consumerCost = consumer.getValue();
+                                Double consumerCost = consumer.getValue();
                                 String key = payer + "收" + consumerName;
                                 String rekey = consumerName + "收" + payer;
                                 if (liquidation.containsKey(rekey)){
-                                        Float payerCost = liquidation.get(rekey);
+                                        Double payerCost = liquidation.get(rekey);
                                         if (payerCost > consumerCost){
                                                 liquidation.put(rekey,payerCost - consumerCost);
                                         }else {
@@ -88,8 +90,12 @@ public class BookkeepingAndSettlement {
                 }
 
                 System.out.println("============================最后结果 start");
+                NumberFormat instance = NumberFormat.getInstance();
+                instance.setMaximumFractionDigits(2);
+                instance.setRoundingMode(RoundingMode.DOWN);
+
                 liquidation.forEach((s, aFloat) ->{
-                        System.out.println(s + delimiter + aFloat);
+                        System.out.println(s + delimiter + instance.format(aFloat));
                 });
 
                 System.out.println("============================最后结果 end");

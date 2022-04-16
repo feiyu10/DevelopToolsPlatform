@@ -18,7 +18,7 @@ class BookkeepingAndSettlementTest {
 
     @Test
     void bookkeepingAndSettlementTest(){
-        String filePath = "C:\\Users\\feiyu\\Desktop\\清算测试.txt";
+        String filePath = "C:\\Users\\14166\\Desktop\\20220404清算测试.txt";
         List<String> collect = Txt.readTxtFile(filePath)
                 .stream()
                 .skip(1)
@@ -29,12 +29,11 @@ class BookkeepingAndSettlementTest {
             String[] split = line.split("\\s+");
             BookKeepJo bookKeepJo = new BookKeepJo();
             bookKeepJo.setPayer(split[0]);
-            bookKeepJo.setCost(Float.parseFloat(split[1]));
+            bookKeepJo.setCost(Double.parseDouble(split[1]));
             bookKeepJo.setParticipant(split[2]);
             bookKeepJo.setRemark(StringUtils.defaultString(split[3],""));
             bookKeepJos.add(bookKeepJo);
         }
-
 
         BookkeepingAndSettlement.Settlement(bookKeepJos);
     }

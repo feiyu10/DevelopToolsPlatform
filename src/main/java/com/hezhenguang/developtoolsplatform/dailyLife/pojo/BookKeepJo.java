@@ -4,7 +4,7 @@ public class BookKeepJo {
 
     private String payer;
 
-    private Float cost;
+    private Double cost;
 
     private String participant;
 
@@ -18,11 +18,11 @@ public class BookKeepJo {
         this.payer = payer;
     }
 
-    public Float getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Float cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
