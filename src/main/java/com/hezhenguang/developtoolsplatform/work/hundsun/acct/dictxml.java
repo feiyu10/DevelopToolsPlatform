@@ -1,4 +1,4 @@
-package com.hezhenguang.developtoolsplatform.acct.biz;
+package com.hezhenguang.developtoolsplatform.work.hundsun.acct;
 
 import com.hezhenguang.developtoolsplatform.common.utils.Xml;
 
