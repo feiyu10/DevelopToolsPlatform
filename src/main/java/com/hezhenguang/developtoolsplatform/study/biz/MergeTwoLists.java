@@ -1,4 +1,4 @@
-package com.hezhenguang.developtoolsplatform.study.菜鸟;
+package com.hezhenguang.developtoolsplatform.study.biz;
 
 /**
  * 系统版本: v1.0<br>

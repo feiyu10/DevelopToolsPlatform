@@ -18,7 +18,7 @@ class BookkeepingAndSettlementTest {
 
     @Test
     void bookkeepingAndSettlementTest(){
-        String filePath = "C:\\Users\\14166\\Desktop\\20220706清算测试.txt";
+        String filePath = "C:\\Users\\14166\\Desktop\\清算测试.txt";
         List<String> collect = Txt.readTxtFile(filePath)
                 .stream()
                 .skip(1)

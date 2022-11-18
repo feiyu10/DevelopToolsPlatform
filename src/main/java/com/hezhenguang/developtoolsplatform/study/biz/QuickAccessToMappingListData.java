@@ -1,17 +1,20 @@
-package com.hezhenguang.developtoolsplatform.study.菜鸟;
+package com.hezhenguang.developtoolsplatform.study.biz;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.apache.maven.lifecycle.internal.BuildThreadFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
 
 /**
  * 系统版本: v1.0<br>
@@ -22,6 +25,38 @@ import java.util.stream.Stream;
  **/
 public class QuickAccessToMappingListData {
 
+    public static void main(String[] args) {
+        Map<String,String> data = new HashMap<>();
+        for (Map.Entry<String,String>item : data.entrySet()) {
+            System.out.println(item.getKey() + item.getValue());
+        }
+
+        Thread.currentThread().interrupt();
+        for (String key : data.keySet()) {
+            System.out.println(key);
+        }
+
+        ThreadFactory threadFactory = new ThreadFactoryBuilder().setNameFormat("pool-%s").build();
+        //ExecutorService executorService = Executors.newFixedThreadPool(3, threadFactory);
+        ExecutorService executorService = Executors.newFixedThreadPool(3, new BuildThreadFactory());
+        for (int i = 0; i < 3; i++) {
+            executorService.submit(() -> {
+                System.out.println(Thread.currentThread().getName());
+            });
+        }
+
+
+        for (String value : data.values()) {
+            System.out.println(value);
+        }
+
+        Iterator<Map.Entry<String, String>> iterator = data.entrySet().iterator();
+        iterator.hasNext();
+
+
+
+    }
+
     public static void main1(String[] args) {
 
         long start = System.currentTimeMillis();
@@ -30,7 +65,6 @@ public class QuickAccessToMappingListData {
         for (int i = 0; i < 1000000; i++) {
             data.add(i);
         }
-
         AtomicLong num = new AtomicLong(0);
         CompletableFuture[] cfs = data.stream().map(o -> {
             return CompletableFuture.runAsync(() -> {
@@ -53,7 +87,7 @@ public class QuickAccessToMappingListData {
     private static int THREAD_COUNT = Runtime.getRuntime().availableProcessors()+1;
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main2(String[] args) throws Exception {
         List<Integer> data = new ArrayList<>();
         for (int i = 0; i < 1000000; i++) {
             data.add(i);
@@ -71,7 +105,7 @@ public class QuickAccessToMappingListData {
         }
     }
 
-    public static void main2(String[] args) throws Exception {
+    public static void main24(String[] args) throws Exception {
         for(long i = 1;i <=1000000;i++) {
             chm.put(i, "元素"+i);
         }
