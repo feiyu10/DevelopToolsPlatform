@@ -31,10 +31,6 @@
 //        }
 //    }
 //
-//    A = List<A>
-//    B = List<A>
-//    C = List<A>
-//    D = List<A>
 //
 //
 //    public static Class RuleVo{
@@ -52,11 +48,22 @@
 //    }
 //
 //
-//    ListX  = ( A && B ) || ( C && D )     注意：这里可以由业务自己定义
+//    /**
+//     *
+//     A = List<A>
+//     B = List<A>
+//     C = List<A>
+//     D = List<A>
+//     * @param args
+//     */
+//    public static void main(String[] args) {
 //
-//    // 解析规则 存放到代办任务中  递归场景
-//    List<RuleVo> RuleVoList = new ArrayList();
-//RuleVoList.add(new RuleVo("&&", ))
+//
+//        ListX  = ( A && B ) || ( C && D )     注意：这里可以由业务自己定义
+//
+//        // 解析规则 存放到代办任务中  递归场景
+//        List<RuleVo> RuleVoList = new ArrayList();
+//        RuleVoList.add(new RuleVo("&&", ))
 //
 //// 循环处理代办任务
 //
@@ -64,26 +71,27 @@
 //// 定义好根据具体规则获取当前结果集
 //
 //
-//            if(rule == "&&"){
-//        getAndResultList();
+//        if(rule == "&&"){
+//            getAndResultList();
+//        }
+//
+//        if()
+//
+//
+//            Hashset ABSet = new Hashset<A>();
+//        ABSet.putAll(A);
+//        ABSet.putAll(B);
+//
+//        Hashset CDSet = new Hashset<A>();
+//        ABSet.putAll(C);
+//        ABSet.putAll(D);
+//
+//        List result = new ArrayList<A>();
+//        result.addAll(ABSet);
+//        result.addAll(CDSet);
+//
+//        return result;
 //    }
-//
-//if()
-//
-//
-//    Hashset ABSet = new Hashset<A>();
-//ABSet.putAll(A);
-//ABSet.putAll(B);
-//
-//    Hashset CDSet = new Hashset<A>();
-//ABSet.putAll(C);
-//ABSet.putAll(D);
-//
-//    List result = new ArrayList<A>();
-//result.addAll(ABSet);
-//result.addAll(CDSet);
-//
-//return result;
 //
 //
 //
