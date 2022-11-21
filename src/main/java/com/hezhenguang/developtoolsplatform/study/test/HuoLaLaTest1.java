@@ -35,7 +35,9 @@ public class HuoLaLaTest1 {
 
         public static void main(String[] args) {
 
-            TreeMap<Integer,Integer> data = new TreeMap<>();
+            TreeMap<Integer,Integer> data = new TreeMap<>((s1,s2) -> {
+                return s1 - s2;
+            });
 
             Path path = new File("C:\\Users\\14166\\Desktop\\test.txt").toPath();
             try {
