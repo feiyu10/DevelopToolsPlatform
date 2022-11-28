@@ -13,46 +13,53 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class XieChengtest3 {
 
     private static AtomicInteger count = new AtomicInteger(3);
-    private static CountDownLatch countDownLatchA = new CountDownLatch(count.get());
-    private static CountDownLatch countDownLatchB = new CountDownLatch(count.get());
-    private static CountDownLatch countDownLatchC = new CountDownLatch(count.get());
+    private static CountDownLatch countDownLatchA = new CountDownLatch(1);
+    private static CountDownLatch countDownLatchB = new CountDownLatch(1);
+    private static CountDownLatch countDownLatchC = new CountDownLatch(1);
 
 
     public static void main(String[] args) {
-        new Thread(() -> {
+        Thread a = new Thread(() -> {
             for (int i = 0; i < count.get(); i++) {
-                System.out.print("a");
                 try {
-                    countDownLatchA.await();
+                    System.out.print("a");
                     countDownLatchB.countDown();
+                    countDownLatchA.await();
+                    countDownLatchA = new CountDownLatch(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        },"a").start();
+        }, "a");
 
-        new Thread(() -> {
+        Thread b = new Thread(() -> {
             for (int i = 0; i < count.get(); i++) {
-                System.out.print("b");
                 try {
                     countDownLatchB.await();
+                    System.out.print("b");
+                    countDownLatchB = new CountDownLatch(1);
                     countDownLatchC.countDown();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        },"b").start();
+        },"b");
 
-        new Thread(() -> {
+        Thread c = new Thread(() -> {
             for (int i = 0; i < count.get(); i++) {
-                System.out.println("c");
                 try {
                     countDownLatchC.await();
+                    System.out.println("c");
+                    countDownLatchC = new CountDownLatch(1);
                     countDownLatchA.countDown();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-        },"c").start();
+        },"c");
+
+        c.start();
+        b.start();
+        a.start();
     }
 }
